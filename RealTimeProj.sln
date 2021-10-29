@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeProj", "RealTimeProj\RealTimeProj.csproj", "{9B89333B-67FC-4A11-9CED-0639F63E6404}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{FC467235-E4BD-4C90-9D2B-4D9AAC41308B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B89333B-67FC-4A11-9CED-0639F63E6404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B89333B-67FC-4A11-9CED-0639F63E6404}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B89333B-67FC-4A11-9CED-0639F63E6404}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B89333B-67FC-4A11-9CED-0639F63E6404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC467235-E4BD-4C90-9D2B-4D9AAC41308B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC467235-E4BD-4C90-9D2B-4D9AAC41308B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC467235-E4BD-4C90-9D2B-4D9AAC41308B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC467235-E4BD-4C90-9D2B-4D9AAC41308B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

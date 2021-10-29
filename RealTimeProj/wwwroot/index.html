@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Чат</title>
+</head>
+<body>
+    <div id="author_block" style='visibility: visible'>
+        <input type="text" id="username" />
+        <input type="text" id="messageto" />
+        <input type="button" id="enter" value="Зайти" />
+    </div>
+    <div id="input_block" style='visibility: hidden'>
+        <div id="from_to"></div>
+        <input type="text" id="message" />
+        <input type="button" id="send" value="Отправить (хаб)" />
+        <input type="button" id="sendApi" value="Отправить (апи)" />
+        <div id="chatroom"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
+    <script>
+        function addMessage(username, message) {
+            let userNameElem = document.createElement("b");
+            userNameElem.appendChild(document.createTextNode(username + ": "));
+
+            let elem = document.createElement("p");
+            elem.appendChild(userNameElem);
+            elem.appendChild(document.createTextNode(message));
+
+            let chatroom = document.getElementById("chatroom");
+            chatroom.insertBefore(elem, chatroom.firstChild);
+        }
+        
+        
+        document.getElementById("enter").addEventListener("click", function (e) {
+            const from = document.getElementById("username").value;
+            const to = document.getElementById("messageto").value
+            
+            if (!!from && !!to) {
+                let hubConnection = new signalR.HubConnectionBuilder()
+                    .withUrl('/chat?username=' + from)
+                    .withAutomaticReconnect([1000, 10000]) //[0, 2000, 10000, 30000]
+                    .build();
+                
+                hubConnection.serverTimeoutInMilliseconds = 1000 * 8;
+                
+                hubConnection.on('message', function ({from, message}) {
+                    console.log('message', from, message)
+                    addMessage(from, message);
+                });
+                
+                hubConnection.onreconnected(_ => {
+                    document.getElementById("send").disabled = false;
+                    document.getElementById("sendApi").disabled = false;
+                })
+
+                hubConnection.onreconnecting(error => {
+                    document.getElementById("send").disabled = true;
+                    document.getElementById("sendApi").disabled = true;
+                    alert(error)
+                })
+
+                document.getElementById("send").addEventListener("click", function (e) {
+                    const message = document.getElementById("message").value;
+                    hubConnection.invoke('Send', to, from, message);
+                    //addMessage(from, message);
+                });
+
+                document.getElementById("sendApi").addEventListener("click", function (e) {
+                    const message = document.getElementById("message").value;
+                    fetch(`ChatApi?to=${to}&from=${from}&message=${message}`)
+                    //addMessage(from, message);
+                });
+
+                hubConnection.start()
+                    .then(_ => {
+                        console.log('connection started')
+                        document.getElementById("input_block").style.visibility = 'visible';
+                        document.getElementById("author_block").style.visibility = 'hidden';
+                        document.getElementById("from_to").innerText = from + ' -> ' + to;
+                    })
+                    .catch(err => alert('connection failed: ' + err));
+            }
+        })
+    </script>
+</body>
+</html>
