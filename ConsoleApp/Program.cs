@@ -20,9 +20,9 @@ namespace ConsoleApp
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Кто");
+            Console.WriteLine("UserName:");
             var from = Console.ReadLine();
-            Console.WriteLine("Кому");
+            Console.WriteLine("MessageTo:");
             var to = Console.ReadLine();
             
             var hubConnection = new HubConnectionBuilder()
