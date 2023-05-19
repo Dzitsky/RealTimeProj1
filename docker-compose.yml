@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+
+  api:
+    container_name: signalr-simple-chat
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5000:80
